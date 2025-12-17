@@ -57,17 +57,18 @@ if page == "Dataset Upload & Training":
         st.subheader("Dataset Preview")
         st.dataframe(df.head())
 
-        all_columns = df.columns.tolist()
+        # all_columns = df.columns.tolist()
+        numeric_columns = df.select_dtypes(include=["number"]).columns.tolist()
 
         st.subheader("Feature Selection")
         input_features = st.multiselect(
             "Select input (independent) variables",
-            all_columns,
+            numeric_columns,
         )
 
         target_features = st.multiselect(
             "Select target (prediction) variables",
-            all_columns,
+            numeric_columns,
         )
 
         if input_features and target_features:
