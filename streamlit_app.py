@@ -44,9 +44,15 @@ if page == "Dataset Upload & Training":
 
     if uploaded_file:
         if uploaded_file.name.endswith(".csv"):
-            df = pd.read_csv(uploaded_file)
+            df = pd.read_csv(uploaded_file, header=0)
         else:
-            df = pd.read_excel(uploaded_file)
+            df = pd.read_excel(uploaded_file, header=0)
+
+        # Drop completely empty columns
+        df = df.dropna(axis=1, how="all")
+
+        # Rename columns (strip spaces)
+        df.columns = df.columns.str.strip()
 
         st.subheader("Dataset Preview")
         st.dataframe(df.head())
